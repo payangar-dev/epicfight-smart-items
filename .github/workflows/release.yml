@@ -10,6 +10,11 @@ on:
         options:
           - MINOR
           - MAJOR
+      skip_version_bump:
+        description: 'Release with current version (no increment)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -42,22 +47,29 @@ jobs:
         id: new_version
         run: |
           CURRENT="${{ steps.current_version.outputs.version }}"
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
           
-          if [ "${{ github.event.inputs.version_type }}" == "MAJOR" ]; then
-            MAJOR=$((MAJOR + 1))
-            MINOR=0
-            PATCH=0
+          if [ "${{ github.event.inputs.skip_version_bump }}" == "true" ]; then
+            echo "version=$CURRENT" >> $GITHUB_OUTPUT
+            echo "Keeping current version: $CURRENT"
           else
-            MINOR=$((MINOR + 1))
-            PATCH=0
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+            
+            if [ "${{ github.event.inputs.version_type }}" == "MAJOR" ]; then
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+            else
+              MINOR=$((MINOR + 1))
+              PATCH=0
+            fi
+            
+            NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "New version: $NEW_VERSION"
           fi
-          
-          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "New version: $NEW_VERSION"
 
       - name: Update version in gradle.properties
+        if: ${{ github.event.inputs.skip_version_bump != 'true' }}
         run: |
           sed -i "s/^mod_version=.*/mod_version=${{ steps.new_version.outputs.version }}/" gradle.properties
 
@@ -97,6 +109,7 @@ jobs:
           echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LATEST_TAG}...v${{ steps.new_version.outputs.version }}" >> changelog.md
 
       - name: Commit version bump
+        if: ${{ github.event.inputs.skip_version_bump != 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
