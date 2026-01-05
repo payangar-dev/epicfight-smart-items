@@ -1,0 +1,7 @@
+{
+  "items": [
+    { "tag": "minecraft:pickaxes" },
+    { "tag": "minecraft:shovels" },
+    { "tag": "minecraft:hoes" }
+  ]
+}

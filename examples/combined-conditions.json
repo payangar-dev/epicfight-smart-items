@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "minecraft:book",
+      "components": {
+        "minecraft:custom_name": "\"Mining Manual\""
+      }
+    },
+    {
+      "id": "minecraft:diamond_pickaxe",
+      "components": {
+        "minecraft:damage": 0
+      }
+    },
+    {
+      "id": "minecraft:diamond_sword",
+      "components": {
+        "minecraft:enchantments": {
+          "levels": {
+            "minecraft:sharpness": 5
+          }
+        }
+      }
+    }
+  ]
+}

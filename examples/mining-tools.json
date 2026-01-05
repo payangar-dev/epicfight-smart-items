@@ -1,0 +1,16 @@
+{
+  "items": [
+    { "id": "minecraft:wooden_pickaxe" },
+    { "id": "minecraft:stone_pickaxe" },
+    { "id": "minecraft:iron_pickaxe" },
+    { "id": "minecraft:golden_pickaxe" },
+    { "id": "minecraft:diamond_pickaxe" },
+    { "id": "minecraft:netherite_pickaxe" },
+    { "id": "minecraft:wooden_shovel" },
+    { "id": "minecraft:stone_shovel" },
+    { "id": "minecraft:iron_shovel" },
+    { "id": "minecraft:golden_shovel" },
+    { "id": "minecraft:diamond_shovel" },
+    { "id": "minecraft:netherite_shovel" }
+  ]
+}

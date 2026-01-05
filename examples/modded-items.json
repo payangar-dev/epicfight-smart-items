@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "id": "tinkers:pickaxe" },
+    { "id": "mekanism:atomic_disassembler" },
+    { "tag": "c:tools/pickaxes" },
+    { "tag": "c:tools/shovels" },
+    {
+      "id": "minecraft:stick",
+      "components": {
+        "minecraft:custom_name": "\"Mining Wand\""
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# Compiled files
+build/
+out/
+*.class
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Generated resources
+src/generated/
+
+# Eclipse
+bin/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Runtime directories
+run/
+runs/
