@@ -106,7 +106,7 @@ jobs:
           echo "" >> changelog.md
           echo "$COMMITS" >> changelog.md
           echo "" >> changelog.md
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LATEST_TAG}...v${{ steps.new_version.outputs.version }}" >> changelog.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LATEST_TAG}...v${{ steps.new_version.outputs.version }}-forge-1.20.1" >> changelog.md
 
       - name: Commit version bump
         if: ${{ github.event.inputs.skip_version_bump != 'true' }}
@@ -120,7 +120,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.new_version.outputs.version }}
+          tag_name: v${{ steps.new_version.outputs.version }}-forge-1.20.1
           name: Release v${{ steps.new_version.outputs.version }} (Forge 1.20.1)
           body_path: changelog.md
           files: ${{ steps.artifact.outputs.path }}
