@@ -33,3 +33,6 @@ logs/
 # Runtime directories
 run/
 runs/
+
+# Reference sources
+.sources/

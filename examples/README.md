@@ -7,33 +7,32 @@ Copy any of these files to your `config/` folder and rename to `epicfight-smart-
 Each item selector can have:
 - `id` - Item ID (e.g., `"minecraft:diamond_pickaxe"`)
 - `tag` - Item tag (e.g., `"minecraft:pickaxes"`)
-- `components` - Data components to match (Minecraft 1.21+ format)
+- `nbt` - NBT data to match (Minecraft 1.20.1 CompoundTag format)
 
 All conditions use AND logic. For OR logic, add multiple entries to the list.
 
-## Components Format
+## NBT Format
 
-The `components` field uses Minecraft's native DataComponentPredicate format.
-You can match any data component that items can have:
+The `nbt` field uses Minecraft's NBT CompoundTag format.
+You can match any NBT data that items can have:
 
-### Common Components
+### Common NBT Tags
 
-| Component | Example |
-|-----------|---------|
-| `minecraft:custom_name` | `"\"My Item\""` (JSON text component) |
-| `minecraft:damage` | `0` (integer) |
-| `minecraft:max_damage` | `1561` (integer) |
-| `minecraft:unbreakable` | `{}` |
-| `minecraft:enchantments` | `{"levels": {"minecraft:sharpness": 5}}` |
-| `minecraft:custom_model_data` | `1234` |
-| `minecraft:lore` | `["\"Line 1\"", "\"Line 2\""]` |
+| Tag | Example |
+|-----|---------|
+| `display.Name` | `"{\"text\":\"My Item\"}"` (JSON text component) |
+| `Damage` | `0` (integer) |
+| `Unbreakable` | `1` (byte, 1 = true) |
+| `Enchantments` | `[{"id": "minecraft:sharpness", "lvl": 5}]` |
+| `CustomModelData` | `1234` |
+| `display.Lore` | `["{\"text\":\"Line 1\"}", "{\"text\":\"Line 2\"}"]` |
 
 ### Creating Test Items
 
-Use the `/give` command to create items with components:
+Use the `/give` command to create items with NBT:
 
 ```
-/give @p minecraft:book[custom_name="Mining Manual"]
-/give @p minecraft:diamond_pickaxe[damage=0,unbreakable={}]
-/give @p minecraft:diamond_sword[enchantments={levels:{sharpness:5}}]
+/give @p minecraft:book{display:{Name:'{"text":"Mining Manual"}'}}
+/give @p minecraft:diamond_pickaxe{Damage:0,Unbreakable:1b}
+/give @p minecraft:diamond_sword{Enchantments:[{id:"minecraft:sharpness",lvl:5s}]}
 ```

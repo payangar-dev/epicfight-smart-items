@@ -2,9 +2,10 @@ package com.example.epicfightsmartitems.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -15,12 +16,12 @@ import java.util.Optional;
 public record ItemSelector(
         Optional<ResourceLocation> id,
         Optional<ResourceLocation> tag,
-        Optional<DataComponentPredicate> components
+        Optional<CompoundTag> nbt
 ) {
     public static final Codec<ItemSelector> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.optionalFieldOf("id").forGetter(ItemSelector::id),
             ResourceLocation.CODEC.optionalFieldOf("tag").forGetter(ItemSelector::tag),
-            DataComponentPredicate.CODEC.optionalFieldOf("components").forGetter(ItemSelector::components)
+            CompoundTag.CODEC.optionalFieldOf("nbt").forGetter(ItemSelector::nbt)
     ).apply(instance, ItemSelector::new));
 
     public boolean matches(ItemStack stack) {
@@ -38,9 +39,11 @@ public record ItemSelector(
             if (!stack.is(tagKey)) return false;
         }
 
-        // Check components using DataComponentPredicate
-        if (components.isPresent()) {
-            if (!components.get().test(stack)) return false;
+        // Check NBT data
+        if (nbt.isPresent()) {
+            CompoundTag stackTag = stack.getTag();
+            if (stackTag == null) return false;
+            if (!NbtUtils.compareNbt(nbt.get(), stackTag, true)) return false;
         }
 
         return true;
