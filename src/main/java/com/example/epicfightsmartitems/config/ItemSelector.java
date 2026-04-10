@@ -25,7 +25,10 @@ public record ItemSelector(
     ).apply(instance, ItemSelector::new));
 
     public boolean matches(ItemStack stack) {
-        if (stack.isEmpty()) return false;
+        if (stack.isEmpty()) {
+            return id.isPresent()
+                && id.get().equals(ResourceLocation.withDefaultNamespace("air"));
+        }
 
         // Check item ID
         if (id.isPresent()) {
