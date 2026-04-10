@@ -1,0 +1,7 @@
+{
+  "items": [
+    { "id": "minecraft:air" },
+    { "tag": "minecraft:pickaxes" },
+    { "tag": "minecraft:shovels" }
+  ]
+}
